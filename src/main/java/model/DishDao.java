@@ -14,7 +14,7 @@ import java.util.List;
 // 4. 查询指定菜品
 // 修改菜品信息, 也是可以支持的. (主要就是改价格)
 public class DishDao {
-    public static void add(Dish dish) throws OrderSystemException {
+    public  void add(Dish dish) throws OrderSystemException {
         // 1. 获取数据库连接
         Connection connection = DBUtil.getConnection();
         // 2. 拼装 SQL
@@ -37,7 +37,7 @@ public class DishDao {
             DBUtil.close(connection, statement, null);
         }
     }
-    public static void delete(int dishId) throws OrderSystemException {
+    public  void delete(int dishId) throws OrderSystemException {
         // 1. 获取数据库连接
         Connection connection = DBUtil.getConnection();
         // 2. 拼装 SQL
@@ -59,7 +59,7 @@ public class DishDao {
             DBUtil.close(connection, statement, null);
         }
     }
-    public static List<Dish> selectAll() throws OrderSystemException {
+    public  List<Dish> selectAll() throws OrderSystemException {
         //1.通过mysql datasource对象得到connection连接
         Connection connection = DBUtil.getConnection();
         List<Dish> list = new ArrayList<>();
@@ -88,7 +88,7 @@ public class DishDao {
             DBUtil.close(connection, statement, resultSet);
         }
     }
-        public static Dish selectById(int dishId) throws OrderSystemException {
+        public  Dish selectById(int dishId) throws OrderSystemException {
             // 1. 获取数据库连接
             Connection connection = DBUtil.getConnection();
             // 2. 拼装 SQL

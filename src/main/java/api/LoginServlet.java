@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
         public String reason;
     }
     @Override
+    //登录
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
         Response response = new Response();
@@ -60,5 +61,37 @@ public class LoginServlet extends HttpServlet {
             String jsonString = gson.toJson(response);
             resp.getWriter().write(jsonString);
         }
+    }
+    // 对应到检测登陆状态 API
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
+        Response response = new Response();
+            try {
+                //1.获取session如果没有不创建
+                HttpSession session = req.getSession(false);
+                if(session == null) {
+                    throw new OrderSystemException("用户未登录");
+                }
+                // 2. 从 session 中获取 user 对象
+               User user =  (User) session.getAttribute("user");
+                if(user == null) {
+                    throw new OrderSystemException("用户未登录");
+                }
+                // 3. 把 user 中的信息填充进返回值结果中.
+                response.ok = 1;
+                response.reason = "";
+                response.name = user.getName();
+                response.isAdmin = user.getIsAdmin();
+            } catch (OrderSystemException e) {
+                response.ok = 0;
+                response.reason = e.getMessage();
+                e.printStackTrace();
+        } finally {
+                //4.写回响应
+                resp.setContentType("application/json; charset=utf-8");
+                String json = gson.toJson(response);
+                resp.getWriter().write(json);
+            }
     }
 }
