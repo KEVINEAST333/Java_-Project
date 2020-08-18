@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
         Request request = gson.fromJson(body,Request.class);
         try {
             User user = userDao.selectByName(request.name);
-            if(request == null || !user.getPassword().equals(request.password)) {
+            if(user == null || !user.getPassword().equals(request.password)) {
                 throw new OrderSystemException("用户名或密码错误");
             }
             // 如果登陆成功, 就创建 session 对象. [重要]
