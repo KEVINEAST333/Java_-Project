@@ -55,7 +55,7 @@ public class DishServlet extends HttpServlet {
             Request request = gson.fromJson(body, Request.class);
             Dish dish = new Dish();
             dish.setName(request.name);
-            dish.setPrice(request.price);
+            dish.setPrice(request.price * 100);
             DishDao dishDao = new DishDao();
             dishDao.add(dish);
             response.ok = 1;
